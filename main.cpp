@@ -9,7 +9,7 @@
 
 int main(const int argc, char *argv[]) {
     if (argc <= 1) {
-        messages::usage_message(argv[0]);
+        messages::usage_message(argv[ARG_NAME]);
         exit(1);
     }
 
@@ -28,10 +28,10 @@ int main(const int argc, char *argv[]) {
     };
 
     std::map<std::string, std::function<void()>> actions = {
-        {"--help",    [&]() { messages::help_message(argv[0]); exit(0); }},
-        {"-h",        [&]() { messages::help_message(argv[0]); exit(0); }},
-        {"--version", [&]() { messages::version_message(argv[0]); exit(0); }},
-        {"-v",        [&]() { messages::version_message(argv[0]); exit(0); }},
+        {"--help",    [&]() { messages::help_message(argv[ARG_NAME]); exit(0); }},
+        {"-h",        [&]() { messages::help_message(argv[ARG_NAME]); exit(0); }},
+        {"--version", [&]() { messages::version_message(argv[ARG_NAME]); exit(0); }},
+        {"-v",        [&]() { messages::version_message(argv[ARG_NAME]); exit(0); }},
     };
 
     for (int i = 1; i < argc; ++i) {
@@ -42,23 +42,21 @@ int main(const int argc, char *argv[]) {
     }
 
     if (argc != 4) {
-        messages::usage_message(argv[0]);
+        messages::usage_message(argv[ARG_NAME]);
         exit(1);
     }
 
-    const std::string from_base = argv[1];
-    const std::string num = argv[2];
-    const std::string to_base = argv[3];
+    const std::string from_base = argv[ARG_TO_BASE];
+    const std::string num = argv[ARG_NUM];
+    const std::string to_base = argv[ARG_FROM_BASE];
 
     if (!to_decimal.contains(from_base) || !from_decimal.contains(to_base)) {
-        messages::usage_message(argv[0]);
+        messages::usage_message(argv[ARG_NAME]);
         exit(1);
     }
 
     const int decimal_num = to_decimal[from_base](num);
     const std::string result = from_decimal[to_base](decimal_num);
 
-    std::cout << "Result: [" << result << "]." << std::endl;
-
-    return 0;
+    messages::complete_message(argv[ARG_NAME], result);
 }
