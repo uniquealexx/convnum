@@ -15,4 +15,6 @@ add_executable(convnum main.cpp
         includes/octal_converter.hpp
         src/hexadecimal_converter.cpp
         includes/hexadecimal_converter.hpp
+        src/helper/helper.cpp
+        includes/helper.hpp
 )
